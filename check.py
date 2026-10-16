@@ -15,7 +15,10 @@ for i, s in enumerate(data["sets"], 1):
         errs.append(f"описание {len(d)} != 1000")
     if "\r" in d:
         errs.append("CR в описании (нужен только LF)")
-    if url not in d.split("\n")[0]:
+    lines = d.split("\n")
+    if len(lines) < 2 or lines[1] != "":
+        errs.append("нет пустой строки после первой строки")
+    if url not in lines[0]:
         errs.append("ссылка не найдена в первой строке")
     if "смотреть" in t.lower():
         errs.append("«смотреть» в тайтле")
